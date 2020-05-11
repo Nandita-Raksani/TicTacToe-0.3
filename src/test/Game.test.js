@@ -2,6 +2,7 @@ import React from 'react';
 import Game from '../component/Game';
 import Constants from './constants/Constants';
 import Tile from '../component/Tile';
+import Status from '../component/Status';
 import { shallow, mount } from 'enzyme';
 
 describe(("<Game/> component"), () => {
@@ -49,4 +50,17 @@ describe(("<Game/> component functionality"), () => {
         wrapper.find(Tile).at(1).find('button').simulate('click');
         expect(wrapper.find(Tile).at(1).find('button').text()).toBe(Constants.EXPECT_PLAYER_O);
     })
+
+    it("Should display the status of game with current player turn", () => {
+        expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
+
+        wrapper.find(Tile).at(0).find('button').simulate('click');
+        expect(wrapper.find(Tile).at(0).find('button').text()).toBe(Constants.EXPECT_PLAYER_X);
+        expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_O);
+
+        wrapper.find(Tile).at(1).find('button').simulate('click');
+        expect(wrapper.find(Tile).at(1).find('button').text()).toBe(Constants.EXPECT_PLAYER_O);
+        expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
+    })
+
 });

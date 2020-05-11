@@ -10,6 +10,8 @@ const Constants = {
     EXPECT_MAXIMUM_NUMBER_OF_TILES: 9,
     EXPECT_EMPTY_VALUE: "",
     EXPECT_PLAYER_X: 'X',
-    EXPECT_PLAYER_O: 'O'
+    EXPECT_PLAYER_O: 'O',
+    EXPECT_CURRENT_PLAYER_X: "Current Player : X",
+    EXPECT_CURRENT_PLAYER_O: "Current Player : O"
 };
 export default Constants;
