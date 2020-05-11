@@ -4,6 +4,8 @@ const Constants = {
     PLAYER_O: 'O',
     DISABLED: 'disabled',
     TILE_WINNING: 'tile-winning',
+    RESTART: 'restart',
+    RESTART_BUTTON: 'restart-button',
 
     EXPECT_TIC_TAC_TOE: "Tic-Tac-Toe",
     EXPECT_APP: "App",

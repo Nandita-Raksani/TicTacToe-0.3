@@ -23,6 +23,8 @@ describe(("<Game/> component"), () => {
     it("should render styles correctly", () => {
         expect(wrapper.find("div").at(0).hasClass(Constants.EXPECT_APP)).toBeTruthy();
         expect(wrapper.find("header").hasClass(Constants.EXPECT_APP_HEADER)).toBeTruthy();
+        expect(wrapper.find("div").at(3).hasClass(Constants.RESTART)).toBeTruthy();
+        expect(wrapper.find('button').hasClass(Constants.RESTART_BUTTON)).toBeTruthy();
     })
 });
 
@@ -185,6 +187,18 @@ describe(("<Game/> component functionality"), () => {
     it("should be draw when all tiles are completely filled and no winner", () => {
         playerPlays(Constants.INPUT_GAME_DRAW);
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_GAME_DRAW);
+    });
+
+    it("Should restart game to initial state on clicking Restart button", () => {
+        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_FIRST_ROW);
+        expect(wrapper.find('button').at(9).text()).toBe('Restart');
+        wrapper.find('button').at(9).simulate('click');
+        const tiles = wrapper.find(Tile);
+        tiles.forEach(tile => {
+            expect(tile.find('button').text()).toBe('');
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeFalsy();
+        });
+        expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
     });
 
     const playerPlays = (board) => {
