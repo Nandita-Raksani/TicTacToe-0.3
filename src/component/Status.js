@@ -22,19 +22,18 @@ const Status = (props) => {
     };
 
     const isFirstRowCompletedByAPlayer = (board) => {
-        const positions = Constants.FIRST_ROW_TILES;
-        if (positions.map((position) => board[position]).every((value, index, arr) => value && value === arr[0])) {
-            return { player: board[positions[Constants.INITIAL_TILE_POSITION]], positions: positions };
-        }
-        return null;
+        return isPositionsOccupiedBySamePlayer(board, Constants.FIRST_ROW_TILES);
     };
 
     const isSecondRowCompletedByAPlayer = (board) => {
-        const positions = Constants.SECOND_ROW_TILES;
-        if (positions.map((position) => board[position]).every((value, index, arr) => value && value === arr[0])) {
-            return { player: board[positions[Constants.INITIAL_TILE_POSITION]], positions: positions };
+        return isPositionsOccupiedBySamePlayer(board, Constants.SECOND_ROW_TILES);
+    };
+
+    const isPositionsOccupiedBySamePlayer = (board, tiles) => {
+        if (tiles.map((position) => board[position]).every((tile, index, arr) => tile && tile === arr[0])) {
+            return { player: board[tiles[Constants.INITIAL_TILE_POSITION]], positions: tiles };
         }
-        return null;
+        return Constants.EMPTY_VALUE;
     };
 
     return (
