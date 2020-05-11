@@ -35,6 +35,8 @@ const Constants = {
     INPUT_PLAYER_O_WIN_BY_THIRD_COLUMN: [1, 2, 4, 5, 6, 8],
     INPUT_PLAYER_X_WIN_BY_LEFT_DIAGONAL: [0, 1, 4, 5, 8],
     INPUT_PLAYER_O_WIN_BY_LEFT_DIAGONAL: [1, 0, 3, 4, 5, 8],
+    INPUT_PLAYER_X_WIN_BY_RIGHT_DIAGONAL: [2, 1, 4, 3, 6],
+    INPUT_PLAYER_O_WIN_BY_RIGHT_DIAGONAL: [1, 2, 3, 4, 5, 6],
 
     FIRST_ROW_TILES: [0, 1, 2],
     SECOND_ROW_TILES: [3, 4, 5],
@@ -42,6 +44,7 @@ const Constants = {
     FIRST_COLUMN_TILES: [0, 3, 6],
     SECOND_COLUMN_TILES: [1, 4, 7],
     THIRD_COLUMN_TILES: [2, 5, 8],
-    LEFT_DIAGONAL_TILES: [0, 4, 8]
+    LEFT_DIAGONAL_TILES: [0, 4, 8],
+    RIGHT_DIAGONAL_TILES: [2, 4, 6]
 };
 export default Constants;
