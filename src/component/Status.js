@@ -12,14 +12,18 @@ const Status = (props) => {
 
     const getStatus = () => {
         const { currentPlayer, board } = props;
-        const winner = isFirstRowCompletedByAPlayer(board) || isSecondRowCompletedByAPlayer(board)
-            || isThirdRowCompletedByAPlayer(board);
+        const winner = isRowCompletedByAPlayer(board);
         if (winner && winner.player) {
             setGameStatus(Constants.WINNER + winner.player);
             props.onPlayerWin(winner.positions);
         } else {
             setGameStatus(Constants.CURRENT_PLAYER + (currentPlayer));
         }
+    };
+
+    const isRowCompletedByAPlayer = (board) => {
+        return isFirstRowCompletedByAPlayer(board) || isSecondRowCompletedByAPlayer(board)
+            || isThirdRowCompletedByAPlayer(board);
     };
 
     const isFirstRowCompletedByAPlayer = (board) => {
