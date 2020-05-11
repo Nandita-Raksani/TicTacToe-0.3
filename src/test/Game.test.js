@@ -81,51 +81,20 @@ describe(("<Game/> component functionality"), () => {
     it("Should disable tiles and highlight the winning tile on player won", () => {
         playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_FIRST_ROW);
         const tiles = wrapper.find(Tile);
-        const winningTiles = Constants.FIRST_ROW_TILES;
-
-        tiles.forEach(checkWinningTileStyles);
-        function checkWinningTileStyles(tile, index) {
-            expect(tile.find('button').props()["disabled"]).toBeTruthy();
-            if (winningTiles.includes(index)) {
-                expect(tile.find("button").hasClass('tile-winning')).toBeTruthy();
-            } else {
-                expect(tile.find("button").hasClass('tile-winning')).toBeFalsy();
-            }
-        }
-
+        checkPlayerWon(tiles, Constants.FIRST_ROW_TILES);
     });
 
     it("should declare X as winner if second row is completely filled by X ", () => {
         playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_SECOND_ROW);
         const tiles = wrapper.find(Tile);
-        const winningTiles = Constants.SECOND_ROW_TILES;
-
-        tiles.forEach(checkWinningTileStyles);
-        function checkWinningTileStyles(tile, index) {
-            expect(tile.find('button').props()["disabled"]).toBeTruthy();
-            if (winningTiles.includes(index)) {
-                expect(tile.find("button").hasClass('tile-winning')).toBeTruthy();
-            } else {
-                expect(tile.find("button").hasClass('tile-winning')).toBeFalsy();
-            }
-        }
+        checkPlayerWon(tiles, Constants.SECOND_ROW_TILES);
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if second row is completely filled by O ", () => {
         playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_SECOND_ROW);
         const tiles = wrapper.find(Tile);
-        const winningTiles = Constants.SECOND_ROW_TILES;
-
-        tiles.forEach(checkWinningTileStyles);
-        function checkWinningTileStyles(tile, index) {
-            expect(tile.find('button').props()["disabled"]).toBeTruthy();
-            if (winningTiles.includes(index)) {
-                expect(tile.find("button").hasClass('tile-winning')).toBeTruthy();
-            } else {
-                expect(tile.find("button").hasClass('tile-winning')).toBeFalsy();
-            }
-        }
+        checkPlayerWon(tiles, Constants.SECOND_ROW_TILES);
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
@@ -134,4 +103,17 @@ describe(("<Game/> component functionality"), () => {
             wrapper.find(Tile).at(position).find('button').simulate('click');
         })
     }
+
+    const checkPlayerWon = (tiles, winningTiles) => {
+        tiles.forEach(checkStyles);
+        function checkStyles(tile, index) {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+            if (winningTiles.includes(index)) {
+                expect(tile.find("button").hasClass(Constants.TILE_WINNING)).toBeTruthy();
+            } else {
+                expect(tile.find("button").hasClass(Constants.TILE_WINNING)).toBeFalsy();
+            }
+        }
+    };
+
 });
