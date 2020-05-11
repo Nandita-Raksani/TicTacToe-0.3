@@ -15,13 +15,21 @@ const Status = (props) => {
         const { currentPlayer, board } = props;
         const winner = determineWinner(board);
         if (winner && winner.player) {
-            setGameStatus(Constants.WINNER + winner.player);
-            props.onPlayerWin(winner.positions);
-        } else if (board.indexOf(Constants.EMPTY_VALUE) === Constants.INDEX_NOT_FOUND) {
+            hasPlayerWon(winner);
+        } else if (isDraw(board)) {
             setGameStatus(Constants.GAME_DRAW);
         } else {
             setGameStatus(Constants.CURRENT_PLAYER + (currentPlayer));
         }
+    };
+
+    const hasPlayerWon = (winner) => {
+        setGameStatus(Constants.WINNER + winner.player);
+        props.onPlayerWin(winner.positions);
+    };
+
+    const isDraw = (board) => {
+        return board.indexOf(Constants.EMPTY_VALUE) === Constants.INDEX_NOT_FOUND;
     };
 
     return (
@@ -30,6 +38,7 @@ const Status = (props) => {
 }
 Status.propTypes = {
     currentPlayer: PropTypes.string.isRequired,
-    board: PropTypes.array.isRequired
+    board: PropTypes.array.isRequired,
+    onPlayerWin: PropTypes.func.isRequired
 };
 export default Status;
