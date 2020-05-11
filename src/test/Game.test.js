@@ -78,6 +78,23 @@ describe(("<Game/> component functionality"), () => {
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
+    it("Should disable tiles and highlight the winning tile on player won", () => {
+        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_FIRST_ROW);
+        const tiles = wrapper.find(Tile);
+        const winningTiles = Constants.FIRST_ROW_TILES;
+
+        tiles.forEach(checkWinningTileStyles);
+        function checkWinningTileStyles(tile, index) {
+            expect(tile.find('button').props()["disabled"]).toBeTruthy();
+            if (winningTiles.includes(index)) {
+                expect(tile.find("button").hasClass('tile-winning')).toBeTruthy();
+            } else {
+                expect(tile.find("button").hasClass('tile-winning')).toBeFalsy();
+            }
+        }
+
+    });
+
     const playerPlays = (board) => {
         board.forEach(position => {
             wrapper.find(Tile).at(position).find('button').simulate('click');

@@ -3,6 +3,7 @@ const Constants = {
     DATA_SYMBOL_COLOR: 'data-symbol-color',
     PLAYER_O: 'O',
     DISABLED: 'disabled',
+    TILE_WINNING: 'tile-winning',
 
     EXPECT_TIC_TAC_TOE: "Tic-Tac-Toe",
     EXPECT_APP: "App",
@@ -21,6 +22,8 @@ const Constants = {
     INPUT_PLAYER_O_NEXT_TURN: [1],
     INPUT_PLAYER_O_SECOND_TURN: [0, 1],
     INPUT_PLAYER_X_WIN_BY_FIRST_ROW: [0, 3, 1, 4, 2],
-    INPUT_PLAYER_O_WIN_BY_FIRST_ROW: [3, 0, 4, 1, 6, 2]
+    INPUT_PLAYER_O_WIN_BY_FIRST_ROW: [3, 0, 4, 1, 6, 2],
+
+    FIRST_ROW_TILES: [0, 1, 2],
 };
 export default Constants;

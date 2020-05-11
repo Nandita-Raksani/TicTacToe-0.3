@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Constants from '../constants/Constants';
 
 const Status = (props) => {
+    const [gameStatus, setGameStatus] = useState();
+
+    useEffect(() => {
+        getStatus();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.board])
+
     const getStatus = () => {
         const { currentPlayer, board } = props;
         const winner = isFirstRowCompletedByAPlayer(board);
         if (winner && winner.player) {
-            return Constants.WINNER + winner.player;
+            setGameStatus(Constants.WINNER + winner.player);
+            props.onPlayerWin(winner.positions);
+        } else {
+            setGameStatus(Constants.CURRENT_PLAYER + (currentPlayer));
         }
-        return Constants.CURRENT_PLAYER + currentPlayer;
     };
 
     const isFirstRowCompletedByAPlayer = (board) => {
@@ -21,7 +30,7 @@ const Status = (props) => {
     };
 
     return (
-        <label>{getStatus()}</label>
+        <label>{gameStatus}</label>
     );
 }
 Status.propTypes = {

@@ -61,3 +61,7 @@ button.tile-button[data-symbol-color="O"] {
   color: #424242;
   margin-bottom: 20px;
 }
+
+.tile-winning:disabled{
+  background-color: yellow;
+}

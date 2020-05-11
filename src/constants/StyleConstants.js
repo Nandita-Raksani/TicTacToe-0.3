@@ -4,6 +4,7 @@ const StyleConstants = {
     APP_HEADER: "App-header",
     BOARD: "board",
     TILE_BUTTON: "tile-button ",
-    STATUS: "status"
+    STATUS: "status",
+    TILE_WINNING: "tile-winning"
 };
 export default StyleConstants; 
