@@ -12,6 +12,10 @@ const Constants = {
     EXPECT_PLAYER_X: 'X',
     EXPECT_PLAYER_O: 'O',
     EXPECT_CURRENT_PLAYER_X: "Current Player : X",
-    EXPECT_CURRENT_PLAYER_O: "Current Player : O"
+    EXPECT_CURRENT_PLAYER_O: "Current Player : O",
+
+    INPUT_PLAYER_X_FIRST_TURN: [0],
+    INPUT_PLAYER_O_NEXT_TURN: [1],
+    INPUT_PLAYER_O_SECOND_TURN: [0, 1]
 };
 export default Constants;
