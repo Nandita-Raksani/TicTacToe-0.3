@@ -40,6 +40,13 @@
   cursor: pointer;
 }
 
+.tile-button:disabled {
+  color: #000000;
+  background-color: #cccccc;
+  cursor: default;
+  border-style: dotted;
+}
+
 button.tile-button[data-symbol-color="X"] {
   color: red;
 } 
@@ -53,4 +60,4 @@ button.tile-button[data-symbol-color="O"] {
   margin: auto;
   color: #424242;
   margin-bottom: 20px;
-} 
+}

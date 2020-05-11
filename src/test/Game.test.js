@@ -62,6 +62,12 @@ describe(("<Game/> component functionality"), () => {
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
     })
 
+    it("Should not allow player to play on played tile", () => {
+        playerPlays(Constants.INPUT_PLAYER_X_FIRST_TURN);
+        expect(wrapper.find(Tile).at(0).find('button').text()).toBe(Constants.EXPECT_PLAYER_X);
+        expect(wrapper.find(Tile).at(0).find('button').props()[Constants.DISABLED]).toBeTruthy();
+    })
+
     const playerPlays = (board) => {
         board.forEach(position => {
             wrapper.find(Tile).at(position).find('button').simulate('click');

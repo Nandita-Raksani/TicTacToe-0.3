@@ -31,4 +31,9 @@ describe(("<Tile/> component functionality"), () => {
         expect(wrapper.find('button').props()[Constants.DATA_SYMBOL_COLOR]).toBe(Constants.EXPECT_PLAYER_O);
         expect(wrapper.find("button").text()).toEqual(Constants.EXPECT_PLAYER_O);
     });
+
+    it("should not allow player to play on played tile", () => {
+        const wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} />);
+        expect(wrapper.find('button').props()[Constants.DISABLED]).toBeTruthy();
+    });
 });
