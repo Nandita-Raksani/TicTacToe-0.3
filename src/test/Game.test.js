@@ -98,6 +98,20 @@ describe(("<Game/> component functionality"), () => {
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
+    it("should declare X as winner if third row is completely filled by X ", () => {
+        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_THIRD_ROW);
+        const tiles = wrapper.find(Tile);
+        checkPlayerWon(tiles, Constants.THIRD_ROW_TILES);
+        expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
+    });
+
+    it("should declare O as winner if third row is completely filled by O ", () => {
+        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_THIRD_ROW);
+        const tiles = wrapper.find(Tile);
+        checkPlayerWon(tiles, Constants.THIRD_ROW_TILES);
+        expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
+    });
+
     const playerPlays = (board) => {
         board.forEach(position => {
             wrapper.find(Tile).at(position).find('button').simulate('click');

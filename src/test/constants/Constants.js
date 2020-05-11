@@ -25,8 +25,11 @@ const Constants = {
     INPUT_PLAYER_O_WIN_BY_FIRST_ROW: [3, 0, 4, 1, 6, 2],
     INPUT_PLAYER_X_WIN_BY_SECOND_ROW: [3, 0, 4, 1, 5],
     INPUT_PLAYER_O_WIN_BY_SECOND_ROW: [0, 3, 1, 4, 6, 5],
+    INPUT_PLAYER_X_WIN_BY_THIRD_ROW: [6, 3, 7, 4, 8],
+    INPUT_PLAYER_O_WIN_BY_THIRD_ROW: [3, 6, 4, 7, 2, 8],
 
     FIRST_ROW_TILES: [0, 1, 2],
-    SECOND_ROW_TILES: [3, 4, 5]
+    SECOND_ROW_TILES: [3, 4, 5],
+    THIRD_ROW_TILES: [6, 7, 8]
 };
 export default Constants;
