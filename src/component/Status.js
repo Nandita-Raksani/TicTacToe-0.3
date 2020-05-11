@@ -12,7 +12,8 @@ const Status = (props) => {
 
     const getStatus = () => {
         const { currentPlayer, board } = props;
-        const winner = isRowCompletedByAPlayer(board) || isColumnCompletedByAPlayer(board);
+        const winner = isRowCompletedByAPlayer(board) || isColumnCompletedByAPlayer(board)
+            || isLeftDiagonalCompletedByAPlayer(board);
         if (winner && winner.player) {
             setGameStatus(Constants.WINNER + winner.player);
             props.onPlayerWin(winner.positions);
@@ -53,6 +54,10 @@ const Status = (props) => {
 
     const isThirdColumnCompletedByAPlayer = (board) => {
         return isPositionsOccupiedBySamePlayer(board, Constants.THIRD_COLUMN_TILES);
+    };
+
+    const isLeftDiagonalCompletedByAPlayer = (board) => {
+        return isPositionsOccupiedBySamePlayer(board, Constants.LEFT_DIAGONAL_TILES);
     };
 
     const isPositionsOccupiedBySamePlayer = (board, tiles) => {
