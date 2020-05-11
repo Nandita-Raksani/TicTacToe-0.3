@@ -13,6 +13,8 @@ const Constants = {
     SECOND_COLUMN_TILES: [1, 4, 7],
     THIRD_COLUMN_TILES: [2, 5, 8],
     LEFT_DIAGONAL_TILES: [0, 4, 8],
-    RIGHT_DIAGONAL_TILES: [2, 4, 6]
+    RIGHT_DIAGONAL_TILES: [2, 4, 6],
+    INDEX_NOT_FOUND: -1,
+    GAME_DRAW: "Game is draw!"
 };
 export default Constants;

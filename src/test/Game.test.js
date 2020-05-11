@@ -182,6 +182,11 @@ describe(("<Game/> component functionality"), () => {
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
+    it("should be draw when all tiles are completely filled and no winner", () => {
+        playerPlays(Constants.INPUT_GAME_DRAW);
+        expect(wrapper.find('label').text()).toBe(Constants.EXPECT_GAME_DRAW);
+    });
+
     const playerPlays = (board) => {
         board.forEach(position => {
             wrapper.find(Tile).at(position).find('button').simulate('click');

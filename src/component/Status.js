@@ -17,6 +17,8 @@ const Status = (props) => {
         if (winner && winner.player) {
             setGameStatus(Constants.WINNER + winner.player);
             props.onPlayerWin(winner.positions);
+        } else if (board.indexOf(Constants.EMPTY_VALUE) === Constants.INDEX_NOT_FOUND) {
+            setGameStatus(Constants.GAME_DRAW);
         } else {
             setGameStatus(Constants.CURRENT_PLAYER + (currentPlayer));
         }

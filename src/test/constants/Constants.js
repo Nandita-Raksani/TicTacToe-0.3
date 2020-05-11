@@ -17,6 +17,7 @@ const Constants = {
     EXPECT_CURRENT_PLAYER_O: "Current Player : O",
     EXPECT_WINNER_X: "Winner is : X",
     EXPECT_WINNER_O: "Winner is : O",
+    EXPECT_GAME_DRAW: "Game is draw!",
 
     INPUT_PLAYER_X_FIRST_TURN: [0],
     INPUT_PLAYER_O_NEXT_TURN: [1],
@@ -37,6 +38,7 @@ const Constants = {
     INPUT_PLAYER_O_WIN_BY_LEFT_DIAGONAL: [1, 0, 3, 4, 5, 8],
     INPUT_PLAYER_X_WIN_BY_RIGHT_DIAGONAL: [2, 1, 4, 3, 6],
     INPUT_PLAYER_O_WIN_BY_RIGHT_DIAGONAL: [1, 2, 3, 4, 5, 6],
+    INPUT_GAME_DRAW: [0, 1, 2, 3, 4, 8, 5, 6, 7],
 
     FIRST_ROW_TILES: [0, 1, 2],
     SECOND_ROW_TILES: [3, 4, 5],

@@ -38,4 +38,10 @@ describe(("<Status/> functionality"), () => {
         expect(onPlayerWonMockFn).toHaveBeenCalledTimes(1);
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     })
+
+    it("should be draw when all tiles are completely filled and no winner", () => {
+        const board = ['X', 'O', 'X', 'X', 'X', 'O', 'O', 'X', 'O'];
+        const wrapper = mount(<Status currentPlayer={Constants.PLAYER_X} board={board} onPlayerWin={jest.fn()} />);
+        expect(wrapper.find('label').text()).toBe(Constants.EXPECT_GAME_DRAW);
+    });
 });
