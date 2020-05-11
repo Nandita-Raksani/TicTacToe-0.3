@@ -7,7 +7,7 @@ describe(("<Tile/> component"), () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallow(<Tile />);
+        wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} />);
     });
 
     it("should render correctly", () => {
@@ -16,5 +16,13 @@ describe(("<Tile/> component"), () => {
 
     it("should render the button with styles", () => {
         expect(wrapper.find("button").hasClass(Constants.EXPECT_TILE_BUTTON)).toBeTruthy();
+    });
+});
+
+describe(("<Tile/> component functionality"), () => {
+    it("should display symbol X when value passed from Game is X", () => {
+        const wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} />);
+        expect(wrapper.find('button').props()[Constants.DATA_SYMBOL_COLOR]).toBe(Constants.EXPECT_PLAYER_X);
+        expect(wrapper.find("button").text()).toEqual(Constants.EXPECT_PLAYER_X);
     });
 });
