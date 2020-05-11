@@ -14,9 +14,13 @@ const Constants = {
     EXPECT_PLAYER_O: 'O',
     EXPECT_CURRENT_PLAYER_X: "Current Player : X",
     EXPECT_CURRENT_PLAYER_O: "Current Player : O",
+    EXPECT_WINNER_X: "Winner is : X",
+    EXPECT_WINNER_O: "Winner is : O",
 
     INPUT_PLAYER_X_FIRST_TURN: [0],
     INPUT_PLAYER_O_NEXT_TURN: [1],
-    INPUT_PLAYER_O_SECOND_TURN: [0, 1]
+    INPUT_PLAYER_O_SECOND_TURN: [0, 1],
+    INPUT_PLAYER_X_WIN_BY_FIRST_ROW: [0, 3, 1, 4, 2],
+    INPUT_PLAYER_O_WIN_BY_FIRST_ROW: [3, 0, 4, 1, 6, 2]
 };
 export default Constants;
