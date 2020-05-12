@@ -7,7 +7,9 @@ describe(("<Tile/> component"), () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} gameHasWinner={false} isWinningTile={false} />);
+        wrapper = shallow(<Tile value={Constants.PLAYER_X}
+            onClick={jest.fn()}
+            gameHasWinner={false} />);
     });
 
     it("should render correctly", () => {
@@ -23,16 +25,18 @@ describe(("<Tile/> component functionality"), () => {
     let wrapper;
 
     beforeEach(() => {
-        wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} gameHasWinner={false} isWinningTile={false} />);
+        wrapper = shallow(<Tile value={Constants.PLAYER_X}
+            onClick={jest.fn()}
+            gameHasWinner={false} />);
     });
 
-    it("should display symbol X when value passed from Game is X", () => {
+    it("should display symbol X when player X clicks on tile", () => {
         expect(wrapper.find('button').props()[Constants.DATA_SYMBOL_COLOR]).toBe(Constants.EXPECT_PLAYER_X);
         expect(wrapper.find("button").text()).toEqual(Constants.EXPECT_PLAYER_X);
     });
 
-    it("should display symbol O when value passed from Game is O", () => {
-        wrapper = shallow(<Tile value={Constants.PLAYER_O} onClick={jest.fn()} gameHasWinner={false} isWinningTile={false} />);
+    it("should display symbol O when player O clicks on tile", () => {
+        wrapper = shallow(<Tile value={Constants.PLAYER_O} onClick={jest.fn()} gameHasWinner={false} />);
         expect(wrapper.find('button').props()[Constants.DATA_SYMBOL_COLOR]).toBe(Constants.EXPECT_PLAYER_O);
         expect(wrapper.find("button").text()).toEqual(Constants.EXPECT_PLAYER_O);
     });
@@ -41,9 +45,8 @@ describe(("<Tile/> component functionality"), () => {
         expect(wrapper.find('button').props()[Constants.DISABLED]).toBeTruthy();
     });
 
-    it("Should disable tile once player won and highlight winning tiles", () => {
-        wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} gameHasWinner={true} isWinningTile={true} />);
+    it("Should disable tile once player won the game", () => {
+        wrapper = shallow(<Tile value={Constants.PLAYER_X} onClick={jest.fn()} gameHasWinner={true} />);
         expect(wrapper.find('button').props()[Constants.DISABLED]).toBeTruthy();
-        expect(wrapper.find('button').hasClass(Constants.TILE_WINNING)).toBeTruthy();
     });
 });

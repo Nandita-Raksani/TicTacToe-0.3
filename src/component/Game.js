@@ -8,7 +8,6 @@ import StyleConstants from '../constants/StyleConstants';
 const Game = () => {
     const [board, setBoard] = useState(Array(Constants.MAXIMUM_NUMBER_OF_TILES).fill(Constants.EMPTY_VALUE));
     const [currentPlayer, setCurrentPlayer] = useState(Constants.PLAYER_X);
-    const [gameWinningTiles, setGameWinningTiles] = useState([]);
     const [gameHasWinner, setGameHasWinner] = useState(false);
 
     const renderBoard = () => {
@@ -19,7 +18,6 @@ const Game = () => {
                     onClick={() => handleCurrentPlayerTurn(tile)}
                     value={board[tile]}
                     gameHasWinner={gameHasWinner}
-                    isWinningTile={gameWinningTiles && gameWinningTiles.includes(tile)}
                 />
             );
         }
@@ -37,15 +35,13 @@ const Game = () => {
         setCurrentPlayer(currentPlayer === Constants.PLAYER_X ? Constants.PLAYER_O : Constants.PLAYER_X);
     }
 
-    const handlePlayerWon = (winningTiles) => {
-        setGameWinningTiles(winningTiles);
+    const handlePlayerWon = () => {
         setGameHasWinner(true);
     }
 
     const reset = () => {
         setBoard(Array(Constants.MAXIMUM_NUMBER_OF_TILES).fill(Constants.EMPTY_VALUE));
         setCurrentPlayer(Constants.PLAYER_X);
-        setGameWinningTiles([]);
         setGameHasWinner(false);
     };
 
@@ -58,7 +54,7 @@ const Game = () => {
                 <div className={StyleConstants.STATUS}>
                     <Status currentPlayer={currentPlayer}
                         board={board}
-                        onPlayerWin={(winningTiles) => handlePlayerWon(winningTiles)} />
+                        onPlayerWin={() => handlePlayerWon()} />
                 </div>
                 <ul className={StyleConstants.BOARD}>
                     {renderBoard()}

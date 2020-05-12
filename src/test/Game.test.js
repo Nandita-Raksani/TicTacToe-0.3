@@ -25,6 +25,8 @@ describe(("<Game/> component"), () => {
         expect(wrapper.find("header").hasClass(Constants.EXPECT_APP_HEADER)).toBeTruthy();
         expect(wrapper.find("div").at(3).hasClass(Constants.RESTART)).toBeTruthy();
         expect(wrapper.find('button').hasClass(Constants.RESTART_BUTTON)).toBeTruthy();
+        expect(wrapper.find("ul").hasClass('board')).toBeTruthy();
+        expect(wrapper.find("div").at(2).hasClass('status')).toBeTruthy();
     })
 });
 
@@ -47,7 +49,7 @@ describe(("<Game/> component functionality"), () => {
         expect(wrapper.find(Tile).at(0).find('button').text()).toBe(Constants.EXPECT_PLAYER_X);
     })
 
-    it("Should assign the next move to Player O", () => {
+    it("Should assign the alternate move to Player O", () => {
         playerPlays(Constants.INPUT_PLAYER_O_SECOND_TURN);
         expect(wrapper.find(Tile).at(1).find('button').text()).toBe(Constants.EXPECT_PLAYER_O);
     })
@@ -211,11 +213,6 @@ describe(("<Game/> component functionality"), () => {
         tiles.forEach(checkStyles);
         function checkStyles(tile, index) {
             expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
-            if (winningTiles.includes(index)) {
-                expect(tile.find("button").hasClass(Constants.TILE_WINNING)).toBeTruthy();
-            } else {
-                expect(tile.find("button").hasClass(Constants.TILE_WINNING)).toBeFalsy();
-            }
         }
     };
 

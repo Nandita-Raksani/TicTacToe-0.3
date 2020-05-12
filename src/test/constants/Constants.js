@@ -3,7 +3,6 @@ const Constants = {
     DATA_SYMBOL_COLOR: 'data-symbol-color',
     PLAYER_O: 'O',
     DISABLED: 'disabled',
-    TILE_WINNING: 'tile-winning',
     RESTART: 'restart',
     RESTART_BUTTON: 'restart-button',
 
@@ -49,6 +48,10 @@ const Constants = {
     SECOND_COLUMN_TILES: [1, 4, 7],
     THIRD_COLUMN_TILES: [2, 5, 8],
     LEFT_DIAGONAL_TILES: [0, 4, 8],
-    RIGHT_DIAGONAL_TILES: [2, 4, 6]
+    RIGHT_DIAGONAL_TILES: [2, 4, 6],
+
+    INPUT_EMPTY_BOARD: ['', '', '', '', '', '', '', '', ''],
+    INPUT_PLAYER_X_WINNING_BOARD: ['X', 'X', 'X', 'O', 'O'],
+    INPUT_GAME_DRAW_BOARD: ['X', 'O', 'X', 'X', 'X', 'O', 'O', 'X', 'O']
 };
 export default Constants;

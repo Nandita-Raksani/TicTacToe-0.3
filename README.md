@@ -2,11 +2,6 @@
 
 Tic-tac-toe, noughts and crosses, or Xs and Os is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3×3 matrix as per the below depiction. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner. Game will be considered as 'Draw' when all of the grids are marked.
 
-```
-0 1 2
-3 4 5
-6 7 8
-```
 # Purpose
 
 This game is developed using React in Test Driven Development approach.

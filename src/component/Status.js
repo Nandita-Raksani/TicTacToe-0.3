@@ -7,35 +7,37 @@ const Status = (props) => {
     const [gameStatus, setGameStatus] = useState();
 
     useEffect(() => {
-        getStatus();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.board])
-
-    const getStatus = () => {
         const { currentPlayer, board } = props;
-        const winner = determineWinner(board);
-        if (winner && winner.player) {
-            hasPlayerWon(winner);
-        } else if (isDraw(board)) {
-            setGameStatus(Constants.GAME_DRAW);
-        } else {
-            setGameStatus(Constants.CURRENT_PLAYER + (currentPlayer));
-        }
-    };
 
-    const hasPlayerWon = (winner) => {
-        setGameStatus(Constants.WINNER + winner.player);
-        props.onPlayerWin(winner.positions);
-    };
+        const getStatus = () => {
+            if (determineWinner(board)) {
+                hasPlayerWon();
+            } else if (isDraw(board)) {
+                setGameStatus(Constants.GAME_DRAW);
+            } else {
+                setGameStatus(Constants.CURRENT_PLAYER + currentPlayer);
+            }
+        };
+
+        const hasPlayerWon = () => {
+            setGameStatus(Constants.WINNER + getWinningPlayer());
+            props.onPlayerWin();
+        };
+
+        const getWinningPlayer = () => {
+            return currentPlayer === Constants.PLAYER_X ? Constants.PLAYER_O : Constants.PLAYER_X;
+        };
+
+        getStatus();
+
+    }, [props]);
 
     const isDraw = (board) => {
         return board.indexOf(Constants.EMPTY_VALUE) === Constants.INDEX_NOT_FOUND;
     };
 
-    return (
-        <label>{gameStatus}</label>
-    );
-}
+    return <label>{gameStatus}</label>;
+};
 Status.propTypes = {
     currentPlayer: PropTypes.string.isRequired,
     board: PropTypes.array.isRequired,
