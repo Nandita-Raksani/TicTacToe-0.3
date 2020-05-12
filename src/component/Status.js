@@ -7,9 +7,9 @@ const Status = (props) => {
     const [winner, setWinner] = useState();
     const { currentPlayer, board, onPlayerWin } = props;
 
-    useEffect(() => {getStatus();});
+    useEffect(() => { updateStatus(); });
 
-    const getStatus = () => {
+    const updateStatus = () => {
         if (hasGameWon()) {
             setGameStatus(Constants.WINNER + winner);
             onPlayerWin();

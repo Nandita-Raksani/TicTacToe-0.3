@@ -31,10 +31,22 @@ describe(("<Game/> component"), () => {
 });
 
 describe(("<Game/> component functionality"), () => {
-    let wrapper;
+    let wrapper, PLAYER_X, PLAYER_O;
 
     beforeEach(() => {
         wrapper = mount(<Game />);
+
+        PLAYER_X = {
+            play: function (tile) {
+                wrapper.find(Tile).at(tile).find('button').simulate('click');
+            }
+        }
+
+        PLAYER_O = {
+            play: function (tile) {
+                wrapper.find(Tile).at(tile).find('button').simulate('click');
+            }
+        }
     });
 
     it("Should render 9 empty Tiles", () => {
@@ -45,175 +57,289 @@ describe(("<Game/> component functionality"), () => {
     })
 
     it("Should always assign first move to Player X", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_FIRST_TURN);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+
         expect(wrapper.find(Tile).at(0).find('button').text()).toBe(Constants.EXPECT_PLAYER_X);
     })
 
     it("Should assign the alternate move to Player O", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_SECOND_TURN);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+
         expect(wrapper.find(Tile).at(1).find('button').text()).toBe(Constants.EXPECT_PLAYER_O);
     })
 
     it("Should display the status of game with current player turn", () => {
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
 
-        playerPlays(Constants.INPUT_PLAYER_X_FIRST_TURN);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+
         expect(wrapper.find(Tile).at(0).find('button').text()).toBe(Constants.EXPECT_PLAYER_X);
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_O);
 
-        playerPlays(Constants.INPUT_PLAYER_O_NEXT_TURN);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+
         expect(wrapper.find(Tile).at(1).find('button').text()).toBe(Constants.EXPECT_PLAYER_O);
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
     })
 
     it("Should not allow play to play on played tile", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_FIRST_TURN);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+
         expect(wrapper.find(Tile).at(0).find('button').text()).toBe(Constants.EXPECT_PLAYER_X);
         expect(wrapper.find(Tile).at(0).find('button').props()[Constants.DISABLED]).toBeTruthy();
     })
 
     it("should declare X as winner if first row is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_FIRST_ROW);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.TOP_RIGHT_TILE);
+
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if first row is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_FIRST_ROW);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.BOTTOM_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_RIGHT_TILE);
+
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
-    it("Should disable tiles and highlight the winning tile on player won", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_FIRST_ROW);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.FIRST_ROW_TILES);
+    it("Should disable tiles on winning game", () => {
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.TOP_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
     });
 
     it("should declare X as winner if second row is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_SECOND_ROW);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.SECOND_ROW_TILES);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.CENTER_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if second row is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_SECOND_ROW);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.SECOND_ROW_TILES);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.BOTTOM_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should declare X as winner if third row is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_THIRD_ROW);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.THIRD_ROW_TILES);
+        PLAYER_X.play(Constants.BOTTOM_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_MIDDLE_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.BOTTOM_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if third row is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_THIRD_ROW);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.THIRD_ROW_TILES);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.BOTTOM_MIDDLE_TILE);
+        PLAYER_X.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should declare X as winner if first column is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_FIRST_COLUMN);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.FIRST_COLUMN_TILES);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.BOTTOM_LEFT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if first column is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_FIRST_COLUMN);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.FIRST_COLUMN_TILES);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.TOP_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_LEFT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should declare X as winner if second column is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_SECOND_COLUMN);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.SECOND_COLUMN_TILES);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.TOP_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_MIDDLE_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if second column is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_SECOND_COLUMN);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.SECOND_COLUMN_TILES);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.BOTTOM_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_MIDDLE_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should declare X as winner if third column is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_THIRD_COLUMN);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.THIRD_COLUMN_TILES);
+        PLAYER_X.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.BOTTOM_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if third column is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_THIRD_COLUMN);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.THIRD_COLUMN_TILES);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_LEFT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should declare X as winner if left diagonal is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_LEFT_DIAGONAL);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.LEFT_DIAGONAL_TILES);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if left diagonal is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_LEFT_DIAGONAL);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.LEFT_DIAGONAL_TILES);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.TOP_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_RIGHT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should declare X as winner if right diagonal is completely filled by X ", () => {
-        playerPlays(Constants.INPUT_PLAYER_X_WIN_BY_RIGHT_DIAGONAL);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.RIGHT_DIAGONAL_TILES);
+        PLAYER_X.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_LEFT_TILE);
+
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     });
 
     it("should declare O as winner if right diagonal is completely filled by O ", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_RIGHT_DIAGONAL);
-        const tiles = wrapper.find(Tile);
-        checkPlayerWon(tiles, Constants.RIGHT_DIAGONAL_TILES);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_LEFT_TILE);
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
+        });
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_O);
     });
 
     it("should be draw when all tiles are completely filled and no winner", () => {
-        playerPlays(Constants.INPUT_GAME_DRAW);
+        PLAYER_X.play(Constants.TOP_LEFT_TILE);
+        PLAYER_O.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_X.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_O.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_X.play(Constants.CENTER_TILE);
+        PLAYER_O.play(Constants.BOTTOM_RIGHT_TILE);
+        PLAYER_X.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_LEFT_TILE);
+        PLAYER_X.play(Constants.BOTTOM_MIDDLE_TILE);
+
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_GAME_DRAW);
     });
 
     it("Should restart game to initial state on clicking Restart button", () => {
-        playerPlays(Constants.INPUT_PLAYER_O_WIN_BY_FIRST_ROW);
+        PLAYER_X.play(Constants.TOP_MIDDLE_TILE);
+        PLAYER_O.play(Constants.TOP_RIGHT_TILE);
+        PLAYER_X.play(Constants.CENTER_LEFT_TILE);
+        PLAYER_O.play(Constants.CENTER_TILE);
+        PLAYER_X.play(Constants.CENTER_RIGHT_TILE);
+        PLAYER_O.play(Constants.BOTTOM_LEFT_TILE);
+
         expect(wrapper.find('button').at(9).text()).toBe('Restart');
         wrapper.find('button').at(9).simulate('click');
-        const tiles = wrapper.find(Tile);
-        tiles.forEach(tile => {
-            expect(tile.find('button').text()).toBe('');
+        wrapper.find(Tile).forEach(tile => {
+            expect(tile.find('button').text()).toBe(Constants.EXPECT_EMPTY_VALUE);
             expect(tile.find('button').props()[Constants.DISABLED]).toBeFalsy();
         });
         expect(wrapper.find(Status).find('label').text()).toBe(Constants.EXPECT_CURRENT_PLAYER_X);
     });
-
-    const playerPlays = (board) => {
-        board.forEach(position => {
-            wrapper.find(Tile).at(position).find('button').simulate('click');
-        })
-    }
-
-    const checkPlayerWon = (tiles, winningTiles) => {
-        tiles.forEach(checkStyles);
-        function checkStyles(tile, index) {
-            expect(tile.find('button').props()[Constants.DISABLED]).toBeTruthy();
-        }
-    };
 
 });
