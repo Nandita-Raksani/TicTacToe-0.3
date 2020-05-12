@@ -38,7 +38,6 @@ describe(("<Status/> functionality"), () => {
             board={Constants.INPUT_PLAYER_X_WINNING_BOARD}
             onPlayerWin={onPlayerWonMockFn} />);
         expect(onPlayerWonMockFn).toHaveBeenCalled();
-        expect(onPlayerWonMockFn).toHaveBeenCalledTimes(1);
         expect(wrapper.find('label').text()).toBe(Constants.EXPECT_WINNER_X);
     })
 
